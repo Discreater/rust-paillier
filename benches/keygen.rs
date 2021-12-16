@@ -7,8 +7,8 @@ mod helpers;
 #[cfg(feature = "keygen")]
 mod bench {
 
-    use bencher::Bencher;
     use crate::helpers::*;
+    use bencher::Bencher;
     use paillier::*;
 
     pub fn bench_key_generation<KS: KeySize>(b: &mut Bencher) {
@@ -25,7 +25,6 @@ mod bench {
         self::bench_key_generation<KeySize3072>,
         self::bench_key_generation<KeySize4096>
     );
-
 }
 
 #[cfg(feature = "keygen")]

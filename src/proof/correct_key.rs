@@ -242,5 +242,4 @@ mod tests {
         let result = Paillier::verify(&proof_results.unwrap(), &verification_aid);
         assert!(result.is_err()); // ERROR expected because of manipulated aid
     }
-
 }

@@ -1,4 +1,4 @@
-#![cfg(feature="useframp")]
+#![cfg(feature = "useframp")]
 
 extern crate framp;
 use super::traits::*;

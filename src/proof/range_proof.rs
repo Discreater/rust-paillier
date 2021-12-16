@@ -572,5 +572,4 @@ mod tests {
                 Paillier::verifier_output(&ek, &e, &encrypted_pairs, &z_vector, &range, cipher_x);
         });
     }
-
 }

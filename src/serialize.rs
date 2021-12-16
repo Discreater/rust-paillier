@@ -1,8 +1,8 @@
 pub mod bigint {
 
+    use crate::BigInt;
     use serde::{de, ser};
     use std::fmt;
-    use crate::BigInt;
 
     pub fn serialize<S: ser::Serializer>(x: &BigInt, serializer: S) -> Result<S::Ok, S::Error> {
         serializer.serialize_str(&x.to_str_radix(10))
@@ -30,11 +30,11 @@ pub mod bigint {
 
 pub mod vecbigint {
 
+    use crate::BigInt;
     use serde::de::SeqAccess;
     use serde::ser::SerializeSeq;
     use serde::{de, ser};
     use std::fmt;
-    use crate::BigInt;
 
     pub fn serialize<S: ser::Serializer>(
         x: &Vec<BigInt>,

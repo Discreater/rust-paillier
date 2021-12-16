@@ -3,9 +3,9 @@
 use std::marker::PhantomData;
 
 use crate::arithimpl::traits::ConvertFrom;
+use crate::BigInt;
 use serde::de::Deserialize;
 use serde::ser::Serialize;
-use crate::BigInt;
 
 pub mod integral;
 
