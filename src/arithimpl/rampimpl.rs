@@ -30,8 +30,8 @@ impl NumberTests for ramp::Int {
     fn is_even(&self) -> bool {
         self.is_even()
     }
-    fn is_negative(me: &Self) -> bool {
-        me < &0
+    fn is_negative(&self) -> bool {
+        self < &0
     }
 }
 

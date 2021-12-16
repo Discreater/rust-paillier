@@ -4,7 +4,8 @@ extern crate gmp;
 
 use super::traits::*;
 use self::gmp::mpz::Mpz;
-use rand::{OsRng, Rng};
+use rand::{RngCore};
+use rand::rngs::OsRng;
 
 impl Samplable for Mpz {
 
@@ -19,7 +20,7 @@ impl Samplable for Mpz {
     }
 
     fn sample(bitsize: usize) -> Self {
-        let mut rng = OsRng::new().unwrap();
+        let mut rng = OsRng::default();
         let bytes = (bitsize -1) / 8 + 1;
         let mut buf: Vec<u8> = vec![0; bytes];
         rng.fill_bytes(&mut buf);
@@ -32,9 +33,9 @@ impl Samplable for Mpz {
 }
 
 impl NumberTests for Mpz {
-    fn is_zero(me: &Self) -> bool { me.is_zero() }
-    fn is_even(me: &Self) -> bool { me.is_multiple_of(&Mpz::from(2)) }
-    fn is_negative(me: &Self) -> bool { me < &Mpz::from(0) }
+    fn is_zero(&self) -> bool { self.is_zero() }
+    fn is_even(&self) -> bool { self.is_multiple_of(&Mpz::from(2)) }
+    fn is_negative(&self) -> bool { self < &Mpz::from(0) }
 }
 
 pub use num_traits::{Zero, One};

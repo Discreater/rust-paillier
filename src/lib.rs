@@ -56,8 +56,8 @@ pub use self::rampinstance::*;
 #[cfg(feature="inclnum")]
 mod numinstance
 {
-    pub use arithimpl::numimpl::BigInteger as NumBigInteger;
-    pub type NumPaillier = ::AbstractPaillier<NumBigInteger>;
+    pub use crate::arithimpl::numimpl::BigInteger as NumBigInteger;
+    pub type NumPaillier = crate::AbstractPaillier<NumBigInteger>;
 
     #[cfg(feature="defaultnum")]
     pub type BigInteger = NumBigInteger;
@@ -75,8 +75,8 @@ pub use self::numinstance::*;
 #[cfg(feature="inclgmp")]
 mod gmpinstance
 {
-    pub use arithimpl::gmpimpl::BigInteger as GmpBigInteger;
-    pub type GmpPaillier = ::AbstractPaillier<GmpBigInteger>;
+    pub use crate::arithimpl::gmpimpl::BigInteger as GmpBigInteger;
+    pub type GmpPaillier = crate::AbstractPaillier<GmpBigInteger>;
 
     #[cfg(feature="defaultgmp")]
     pub type BigInteger = GmpBigInteger;

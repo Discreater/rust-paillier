@@ -12,14 +12,14 @@ macro_rules! bigint {
         #[cfg(feature="inclgmp")]
         mod gmp {
             #[allow(dead_code)]
-            type $t = ::GmpBigInteger;
+            type $t = crate::GmpBigInteger;
             $body
         }
 
         #[cfg(feature="inclnum")]
         mod num {
             #[allow(dead_code)]
-            type $t = ::NumBigInteger;
+            type $t = crate::NumBigInteger;
             $body
         }
 

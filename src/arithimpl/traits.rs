@@ -4,7 +4,7 @@ use std::marker::Sized;
 pub trait NumberTests {
     fn is_zero(&self) -> bool;
     fn is_even(&self) -> bool;
-    fn is_negative(me: &Self) -> bool;
+    fn is_negative(&self) -> bool;
 }
 
 pub trait ModPow

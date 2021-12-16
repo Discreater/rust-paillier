@@ -19,7 +19,7 @@ repository = "https://github.com/snipsco/rust-paillier"
 documentation = "https://docs.rs/paillier"
 license = "MIT/Apache-2.0"
 categories = ["cryptography"]
-edition = "2018"
+edition = "2021"
 
 [badges]
 travis-ci = { repository = "snipsco/rust-paillier" }
