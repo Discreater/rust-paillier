@@ -2,8 +2,8 @@
 use std::marker::Sized;
 
 pub trait NumberTests {
-    fn is_zero(&Self) -> bool;
-    fn is_even(&Self) -> bool;
+    fn is_zero(&self) -> bool;
+    fn is_even(&self) -> bool;
     fn is_negative(me: &Self) -> bool;
 }
 
@@ -35,7 +35,7 @@ pub trait BitManipulation {
 }
 
 pub trait ConvertFrom<T> {
-    fn _from(&T) -> Self;
+    fn _from(_: &T) -> Self;
 }
 
 use std::ops::{Add, Sub, Mul, Div, Rem, Shr, Neg};

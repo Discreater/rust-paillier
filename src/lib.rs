@@ -1,5 +1,5 @@
 #![feature(test)]
-#![feature(specialization)]
+#![feature(min_specialization)]
 
 extern crate test;
 extern crate rand;

@@ -282,10 +282,10 @@ where
     I: BitManipulation,
 {
     // First, simple trial divide
-    for p in SMALL_PRIMES.into_iter() {
+    for p in SMALL_PRIMES.iter() {
         let prime = I::from(*p);
         let r = candidate % &prime;
-        if !r.is_zero() {
+        if !NumberTests::is_zero(&r) {
             continue;
         } else {
             return false;
