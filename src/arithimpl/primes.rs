@@ -1,4 +1,4 @@
-use arithimpl::traits::*;
+use crate::arithimpl::traits::*;
 use std::ops::{Add, Sub, Mul, Div, Rem, Shr, Neg};
 use std::marker::Sized;
 use num_traits::{Zero, One};

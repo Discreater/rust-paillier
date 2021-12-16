@@ -10,7 +10,7 @@ mod bench {
     use bencher::Bencher;
     use paillier::RampPaillier;
     use paillier::*;
-    use helpers::*;
+    use crate::helpers::*;
 
     pub fn bench_key_generation<S, KS>(b: &mut Bencher)
     where

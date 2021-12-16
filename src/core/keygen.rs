@@ -2,7 +2,7 @@
 //! Key generation following standard recommendations.
 
 use super::*;
-use arithimpl::primes::*;
+use crate::arithimpl::primes::*;
 
 impl<I, S> KeyGeneration<Keypair<I>> for S
 where // TODO clean up bounds

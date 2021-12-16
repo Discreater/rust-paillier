@@ -115,8 +115,8 @@ bigint!(I,
 mod tests {
 
     use super::I;
-    use ::AbstractPaillier;
-    use ::integral::vector::*;
+    use crate::AbstractPaillier;
+    use crate::integral::vector::*;
 
     fn test_keypair() -> Keypair<I> {
         //1024 bits prime

@@ -8,7 +8,7 @@ macro_rules! scheme {
         #[cfg(feature="inclramp")]
         pub mod ramp {
             #[allow(dead_code)]
-            type $s = ::RampPaillier;
+            type $s = crate::RampPaillier;
             $body
         }
 

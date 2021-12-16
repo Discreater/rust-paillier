@@ -1,7 +1,7 @@
 
 use std::ops::{Add, Shl, Shr, Rem};
 use num_traits::One;
-use arithimpl::traits::ConvertFrom;
+use crate::arithimpl::traits::ConvertFrom;
 
 pub fn pack<I, T>(components: &Vec<T>, component_count: usize, component_size: usize) -> I
 where

@@ -10,7 +10,7 @@ use paillier::core::*;
 #[macro_use]
 mod macros;
 mod helpers;
-use helpers::*;
+use crate::helpers::*;
 
 pub fn bench_encryption<S, EK>(b: &mut Bencher)
 where

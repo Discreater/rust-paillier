@@ -20,7 +20,7 @@ pub struct DecryptionKey<I> {
 }
 
 
-impl<I> ::traits::DecryptionKey for DecryptionKey<I> {}
+impl<I> crate::traits::DecryptionKey for DecryptionKey<I> {}
 
 
 impl<'kp, I> From<&'kp Keypair<I>> for DecryptionKey<I>

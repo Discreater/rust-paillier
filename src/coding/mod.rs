@@ -19,7 +19,7 @@ pub struct EncodingEncryptionKey<'ek, 'e, EK: 'ek, E: 'e> {
     encoder: &'e E,
 }
 
-impl<'ek, 'e, EK: 'ek, E: 'e> ::traits::EncryptionKey for EncodingEncryptionKey<'ek, 'e, EK, E> {}
+impl<'ek, 'e, EK: 'ek, E: 'e> crate::traits::EncryptionKey for EncodingEncryptionKey<'ek, 'e, EK, E> {}
 
 /// Decryption key with associated decoder.
 pub struct DecodingDecryptionKey<'dk, 'd, DK: 'dk, D: 'd> {
@@ -27,11 +27,11 @@ pub struct DecodingDecryptionKey<'dk, 'd, DK: 'dk, D: 'd> {
     decoder: &'d D,
 }
 
-impl<'dk, 'd, DK: 'dk, D: 'd> ::traits::DecryptionKey for DecodingDecryptionKey<'dk, 'd, DK, D> {}
+impl<'dk, 'd, DK: 'dk, D: 'd> crate::traits::DecryptionKey for DecodingDecryptionKey<'dk, 'd, DK, D> {}
 
 impl<'a, 'b, EK, E> WithCode<'a, 'b, EncodingEncryptionKey<'a, 'b, EK, E>, E> for EK
 where
-    EK: ::traits::EncryptionKey
+    EK: crate::traits::EncryptionKey
 {
     fn with_code(&'a self, code: &'b E) -> EncodingEncryptionKey<'a, 'b, EK, E> {
         EncodingEncryptionKey {
@@ -43,7 +43,7 @@ where
 
 impl<'a, 'b, DK, D> WithCode<'a, 'b, DecodingDecryptionKey<'a, 'b, DK, D>, D> for DK
 where
-    DK: ::traits::DecryptionKey
+    DK: crate::traits::DecryptionKey
 {
     fn with_code(&'a self, code: &'b D) -> DecodingDecryptionKey<'a, 'b, DK, D> {
         DecodingDecryptionKey {

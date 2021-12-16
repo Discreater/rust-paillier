@@ -12,7 +12,7 @@ pub struct EncryptionKey<I> {
 }
 
 
-impl<I> ::traits::EncryptionKey for EncryptionKey<I> {}
+impl<I> crate::traits::EncryptionKey for EncryptionKey<I> {}
 
 
 impl<'kp, I> From<&'kp Keypair<I>> for EncryptionKey<I>
@@ -41,7 +41,7 @@ pub struct DecryptionKey<I> {
     mu: I,     // fixed at lambda^{-1}
 }
 
-impl<I> ::traits::DecryptionKey for DecryptionKey<I> {}
+impl<I> crate::traits::DecryptionKey for DecryptionKey<I> {}
 
 impl<'kp, I> From<&'kp Keypair<I>> for DecryptionKey<I>
 where

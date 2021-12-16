@@ -5,7 +5,7 @@ macro_rules! bigint {
         #[cfg(feature="inclramp")]
         mod ramp {
             #[allow(dead_code)]
-            type $t = ::RampBigInteger;
+            type $t = crate::RampBigInteger;
             $body
         }
 

@@ -8,7 +8,7 @@ pub mod vector;
 
 use std::ops::{Add, Shl, Shr, Rem};
 use num_traits::One;
-use arithimpl::traits::ConvertFrom;
+use crate::arithimpl::traits::ConvertFrom;
 use std::marker::PhantomData;
 
 

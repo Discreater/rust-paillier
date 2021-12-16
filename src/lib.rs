@@ -13,11 +13,11 @@ pub mod traits;
 pub mod core;
 pub mod coding;
 
-pub use traits::*;
-pub use coding::*;
-pub use core::Keypair;
-pub use core::standard::EncryptionKey;
-pub use core::crt::DecryptionKey;
+pub use crate::traits::*;
+pub use crate::coding::*;
+pub use crate::core::Keypair;
+pub use crate::core::standard::EncryptionKey;
+pub use crate::core::crt::DecryptionKey;
 
 
 /// Parameterised type onto which all operations are added (see `Paillier`).
@@ -37,8 +37,8 @@ impl<I> AbstractScheme for AbstractPaillier<I> {
 #[cfg(feature="inclramp")]
 mod rampinstance
 {
-    pub use arithimpl::rampimpl::BigInteger as RampBigInteger;
-    pub type RampPaillier = ::AbstractPaillier<RampBigInteger>;
+    pub use crate::arithimpl::rampimpl::BigInteger as RampBigInteger;
+    pub type RampPaillier = crate::AbstractPaillier<RampBigInteger>;
 
     #[cfg(feature="defaultramp")]
     pub type BigInteger = RampBigInteger;

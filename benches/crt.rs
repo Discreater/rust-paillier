@@ -6,7 +6,7 @@ extern crate num_traits;
 #[macro_use]
 mod macros;
 mod helpers;
-use helpers::*;
+use crate::helpers::*;
 
 scheme!(S, bench, group,
 pub mod bench
@@ -16,7 +16,7 @@ pub mod bench
     use bencher::Bencher;
     use paillier::*;
 
-    use TestKeyGeneration;
+    use crate::TestKeyGeneration;
 
     pub fn bench_decryption_crt_small(b: &mut Bencher) {
         let keypair = S::test_keypair();
@@ -35,7 +35,7 @@ pub mod bench
         let ek = core::standard::EncryptionKey::from(&keypair);
         let dk = core::crt::DecryptionKey::from(&keypair);
 
-        use arithimpl::traits::Samplable;
+        use crate::arithimpl::traits::Samplable;
         let m = core::Plaintext(<S as AbstractScheme>::BigInteger::sample_below(&ek.n));
         let c = S::encrypt(&ek, &m);
         b.iter(|| {
@@ -60,7 +60,7 @@ pub mod bench
         let ek = core::standard::EncryptionKey::from(&keypair);
         let dk = core::standard::DecryptionKey::from(&keypair);
 
-        use arithimpl::traits::Samplable;
+        use crate::arithimpl::traits::Samplable;
         let m = core::Plaintext(<S as AbstractScheme>::BigInteger::sample_below(&ek.n));
         let c = S::encrypt(&ek, &m);
         b.iter(|| {
@@ -77,4 +77,4 @@ pub mod bench
 
 });
 
-benchmark_main!(::ramp::bench::group, ::num::bench::group, ::gmp::bench::group);
+benchmark_main!(crate::ramp::bench::group, crate::num::bench::group, crate::gmp::bench::group);
