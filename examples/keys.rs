@@ -1,16 +1,14 @@
-
 extern crate paillier;
 
-#[cfg(not(feature="keygen"))]
+#[cfg(not(feature = "keygen"))]
 fn main() {
     println!("*** please run with 'keygen' feature ***")
 }
 
-#[cfg(feature="keygen")]
+#[cfg(feature = "keygen")]
 fn main() {
-
-    use paillier::*;
     use paillier::core::*;
+    use paillier::*;
 
     // generate a fresh keypair
     let keypair = Paillier::keypair();
@@ -31,5 +29,4 @@ fn main() {
     let c = Paillier::encrypt(&eek, &10);
     let m: u64 = Paillier::decrypt(&ddk, &c);
     println!("decrypted value is {}", m);
-
 }

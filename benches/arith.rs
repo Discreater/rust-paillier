@@ -1,4 +1,3 @@
-
 #[macro_use]
 extern crate bencher;
 extern crate paillier;
@@ -20,8 +19,9 @@ static N: &'static str = "446397596678771930935753654586920306936946621208913265
 
 pub fn bench_mul<I>(b: &mut Bencher)
 where
-    for<'a, 'b> &'a I : Mul<&'b I, Output=I>,
-    I: ::std::str::FromStr, <I as ::std::str::FromStr>::Err: ::std::fmt::Debug
+    for<'a, 'b> &'a I: Mul<&'b I, Output = I>,
+    I: ::std::str::FromStr,
+    <I as ::std::str::FromStr>::Err: ::std::fmt::Debug,
 {
     let ref p: I = str::parse(P).unwrap();
     let ref q: I = str::parse(Q).unwrap();
@@ -33,9 +33,10 @@ where
 
 pub fn bench_mulrem<I>(b: &mut Bencher)
 where
-    for<'a, 'b> &'a I : Mul<&'b I, Output=I>,
-    for<'b> I : Rem<&'b I, Output=I>,
-    I: ::std::str::FromStr, <I as ::std::str::FromStr>::Err: ::std::fmt::Debug
+    for<'a, 'b> &'a I: Mul<&'b I, Output = I>,
+    for<'b> I: Rem<&'b I, Output = I>,
+    I: ::std::str::FromStr,
+    <I as ::std::str::FromStr>::Err: ::std::fmt::Debug,
 {
     let ref p: I = str::parse(P).unwrap();
     let ref q: I = str::parse(Q).unwrap();
@@ -49,7 +50,8 @@ where
 pub fn bench_modarith<I>(b: &mut Bencher)
 where
     I: paillier::arithimpl::traits::ModPow,
-    I: ::std::str::FromStr, <I as ::std::str::FromStr>::Err: ::std::fmt::Debug
+    I: ::std::str::FromStr,
+    <I as ::std::str::FromStr>::Err: ::std::fmt::Debug,
 {
     let ref p: I = str::parse(P).unwrap();
     let ref q: I = str::parse(Q).unwrap();
@@ -60,22 +62,25 @@ where
     });
 }
 
-#[cfg(feature="inclramp")]
-benchmark_group!(ramp,
+#[cfg(feature = "inclramp")]
+benchmark_group!(
+    ramp,
     self::bench_mul<RampBigInteger>,
     self::bench_mulrem<RampBigInteger>,
     self::bench_modarith<RampBigInteger>
 );
 
-#[cfg(feature="inclnum")]
-benchmark_group!(num,
+#[cfg(feature = "inclnum")]
+benchmark_group!(
+    num,
     self::bench_mul<NumBigInteger>,
     self::bench_mulrem<NumBigInteger>,
     self::bench_modarith<NumBigInteger>
 );
 
-#[cfg(feature="inclgmp")]
-benchmark_group!(gmp,
+#[cfg(feature = "inclgmp")]
+benchmark_group!(
+    gmp,
     self::bench_mul<GmpBigInteger>,
     self::bench_mulrem<GmpBigInteger>,
     self::bench_modarith<GmpBigInteger>
@@ -83,13 +88,13 @@ benchmark_group!(gmp,
 
 pub fn dummy(_: &mut Bencher) {}
 
-#[cfg(not(feature="inclramp"))]
+#[cfg(not(feature = "inclramp"))]
 benchmark_group!(ramp, dummy);
 
-#[cfg(not(feature="inclnum"))]
+#[cfg(not(feature = "inclnum"))]
 benchmark_group!(num, dummy);
 
-#[cfg(not(feature="inclgmp"))]
+#[cfg(not(feature = "inclgmp"))]
 benchmark_group!(gmp, dummy);
 
 benchmark_main!(ramp, num, gmp);

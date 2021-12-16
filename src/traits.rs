@@ -1,16 +1,13 @@
-
 //! Abstract operations exposed by the library.
 
 /// Marker trait for the Paillier scheme.
-pub trait AbstractScheme
-{
+pub trait AbstractScheme {
     /// Underlying arbitrary precision arithmetic type.
     type BigInteger;
 }
 
 /// Secure generation of fresh key pairs.
-pub trait KeyGeneration<KP>
-{
+pub trait KeyGeneration<KP> {
     /// Generate fresh key pair with currently recommended security level (2048 bit modulus).
     fn keypair() -> KP {
         Self::keypair_with_modulus_size(2048)
@@ -24,7 +21,6 @@ pub trait KeyGeneration<KP>
 
 /// Generate default encryption and decryption keys.
 pub trait DefaultKeys {
-
     /// Type of encryption key generated.
     type EK;
 
@@ -95,8 +91,7 @@ impl<T: Into<u64>> EncodableType for Vec<T> {}
 impl EncodableType for u64 {}
 
 /// Encoding into plaintexts.
-pub trait Encoder<T>
-{
+pub trait Encoder<T> {
     type Target;
 
     /// Encode `T` types into `Target` types.
@@ -104,8 +99,7 @@ pub trait Encoder<T>
 }
 
 /// Decoding from plaintexts.
-pub trait Decoder<T>
-{
+pub trait Decoder<T> {
     type Source;
 
     /// Decode `Source` types into `T` types.

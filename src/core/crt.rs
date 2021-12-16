@@ -1,15 +1,13 @@
-
 //! Faster decryption using the Chinese Remainder Theorem.
 
 use super::*;
 
-
 /// Decryption key that should be kept private.
-#[derive(Debug,Clone)]
+#[derive(Debug, Clone)]
 pub struct DecryptionKey<I> {
-    p: I,  // first prime
-    q: I,  // second prime
-    n: I,  // the modulus (also in public key)
+    p: I, // first prime
+    q: I, // second prime
+    n: I, // the modulus (also in public key)
     pp: I,
     pminusone: I,
     qq: I,
@@ -19,20 +17,18 @@ pub struct DecryptionKey<I> {
     hq: I,
 }
 
-
 impl<I> crate::traits::DecryptionKey for DecryptionKey<I> {}
-
 
 impl<'kp, I> From<&'kp Keypair<I>> for DecryptionKey<I>
 where
     I: Clone,
     I: One,
     I: ModInv,
-    for<'a>     &'a I: Sub<I, Output=I>,
-    for<'a,'b>  &'a I: Mul<&'b I, Output=I>,
-    for<'b>         I: Sub<&'b I, Output=I>,
-    for<'b>         I: Rem<&'b I, Output=I>,
-    for<'b>         I: Div<&'b I, Output=I>,
+    for<'a> &'a I: Sub<I, Output = I>,
+    for<'a, 'b> &'a I: Mul<&'b I, Output = I>,
+    for<'b> I: Sub<&'b I, Output = I>,
+    for<'b> I: Rem<&'b I, Output = I>,
+    for<'b> I: Div<&'b I, Output = I>,
 {
     fn from(keypair: &'kp Keypair<I>) -> DecryptionKey<I> {
         let ref p = keypair.p;
@@ -54,26 +50,25 @@ where
             hp: h(p, pp, n),
             hq: h(q, qq, n),
 
-            n: n.clone()
+            n: n.clone(),
         }
     }
 }
 
-
 impl<I, S> Decryption<DecryptionKey<I>, Ciphertext<I>, Plaintext<I>> for S
 where
-    S: AbstractScheme<BigInteger=I>,
+    S: AbstractScheme<BigInteger = I>,
     I: One,
     I: ModPow,
     I: NumberTests,
-    for<'a>    &'a I: Add<I, Output=I>,
-    for<'b>        I: Add<&'b I, Output=I>,
-    for<'a>    &'a I: Sub<I, Output=I>,
-    for<'a,'b> &'a I: Sub<&'b I, Output=I>,
-    for<'b>        I: Mul<&'b I, Output=I>,
-    for<'a,'b> &'a I: Mul<&'b I, Output=I>,
-    for<'b>        I: Div<&'b I, Output=I>,
-    for<'a>        I: Rem<&'a I, Output=I>,
+    for<'a> &'a I: Add<I, Output = I>,
+    for<'b> I: Add<&'b I, Output = I>,
+    for<'a> &'a I: Sub<I, Output = I>,
+    for<'a, 'b> &'a I: Sub<&'b I, Output = I>,
+    for<'b> I: Mul<&'b I, Output = I>,
+    for<'a, 'b> &'a I: Mul<&'b I, Output = I>,
+    for<'b> I: Div<&'b I, Output = I>,
+    for<'a> I: Rem<&'a I, Output = I>,
 {
     fn decrypt(dk: &DecryptionKey<I>, c: &Ciphertext<I>) -> Plaintext<I> {
         // process using p
@@ -89,15 +84,14 @@ where
     }
 }
 
-
 fn h<I>(p: &I, pp: &I, n: &I) -> I
 where
     I: One,
     I: ModInv,
-    for<'a> &'a I: Sub<I, Output=I>,
-    for<'b>     I: Sub<&'b I, Output=I>,
-    for<'b>     I: Rem<&'b I, Output=I>,
-    for<'b>     I: Div<&'b I, Output=I>,
+    for<'a> &'a I: Sub<I, Output = I>,
+    for<'b> I: Sub<&'b I, Output = I>,
+    for<'b> I: Rem<&'b I, Output = I>,
+    for<'b> I: Div<&'b I, Output = I>,
 {
     // here we assume:
     //  - p \in {P, Q}
@@ -113,18 +107,17 @@ where
     hp
 }
 
-
 fn crt<I>(mp: &I, mq: &I, dk: &DecryptionKey<I>) -> I
 where
     I: NumberTests,
-    for<'a>    &'a I: Add<I, Output=I>,
-    for<'b>        I: Add<&'b I, Output=I>,
-    for<'a,'b> &'a I: Sub<&'b I, Output=I>,
-    for<'a,'b> &'a I: Mul<&'b I, Output=I>,
-    for<'b>        I: Mul<&'b I, Output=I>,
-    for<'b>        I: Rem<&'b I, Output=I>,
+    for<'a> &'a I: Add<I, Output = I>,
+    for<'b> I: Add<&'b I, Output = I>,
+    for<'a, 'b> &'a I: Sub<&'b I, Output = I>,
+    for<'a, 'b> &'a I: Mul<&'b I, Output = I>,
+    for<'b> I: Mul<&'b I, Output = I>,
+    for<'b> I: Rem<&'b I, Output = I>,
 {
-    let mut mq_minus_mp = (mq-mp) % &dk.q;
+    let mut mq_minus_mp = (mq - mp) % &dk.q;
     if NumberTests::is_negative(&mq_minus_mp) {
         mq_minus_mp = mq_minus_mp + &dk.q;
     }

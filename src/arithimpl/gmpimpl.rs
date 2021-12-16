@@ -1,30 +1,29 @@
-#![cfg(feature="inclgmp")]
+#![cfg(feature = "inclgmp")]
 
 extern crate gmp;
 
-use super::traits::*;
 use self::gmp::mpz::Mpz;
-use rand::{RngCore};
+use super::traits::*;
 use rand::rngs::OsRng;
+use rand::RngCore;
 
 impl Samplable for Mpz {
-
     fn sample_below(upper: &Self) -> Self {
         let bits = upper.bit_length();
         loop {
-            let n =  Self::sample(bits);
+            let n = Self::sample(bits);
             if n < *upper {
-                return n
+                return n;
             }
         }
     }
 
     fn sample(bitsize: usize) -> Self {
         let mut rng = OsRng::default();
-        let bytes = (bitsize -1) / 8 + 1;
+        let bytes = (bitsize - 1) / 8 + 1;
         let mut buf: Vec<u8> = vec![0; bytes];
         rng.fill_bytes(&mut buf);
-        Self::from(&*buf) >> (bytes*8-bitsize)
+        Self::from(&*buf) >> (bytes * 8 - bitsize)
     }
 
     fn sample_range(lower: &Self, upper: &Self) -> Self {
@@ -33,12 +32,18 @@ impl Samplable for Mpz {
 }
 
 impl NumberTests for Mpz {
-    fn is_zero(&self) -> bool { self.is_zero() }
-    fn is_even(&self) -> bool { self.is_multiple_of(&Mpz::from(2)) }
-    fn is_negative(&self) -> bool { self < &Mpz::from(0) }
+    fn is_zero(&self) -> bool {
+        self.is_zero()
+    }
+    fn is_even(&self) -> bool {
+        self.is_multiple_of(&Mpz::from(2))
+    }
+    fn is_negative(&self) -> bool {
+        self < &Mpz::from(0)
+    }
 }
 
-pub use num_traits::{Zero, One};
+pub use num_traits::{One, Zero};
 
 impl ModPow for Mpz {
     fn modpow(base: &Self, exponent: &Self, modulus: &Self) -> Self {
@@ -74,6 +79,5 @@ impl BitManipulation for Mpz {
         }
     }
 }
-
 
 pub type BigInteger = Mpz;

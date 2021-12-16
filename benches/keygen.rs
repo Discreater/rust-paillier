@@ -4,19 +4,19 @@ extern crate paillier;
 
 mod helpers;
 
-#[cfg(feature="keygen")]
+#[cfg(feature = "keygen")]
 mod bench {
 
+    use crate::helpers::*;
     use bencher::Bencher;
     use paillier::RampPaillier;
     use paillier::*;
-    use crate::helpers::*;
 
     pub fn bench_key_generation<S, KS>(b: &mut Bencher)
     where
-        S : AbstractScheme,
-        S : KeyGeneration<Keypair<<S as AbstractScheme>::BigInteger>>,
-        KS : KeySize,
+        S: AbstractScheme,
+        S: KeyGeneration<Keypair<<S as AbstractScheme>::BigInteger>>,
+        KS: KeySize,
     {
         b.iter(|| {
             S::keypair_with_modulus_size(KS::get());
@@ -30,11 +30,10 @@ mod bench {
         self::bench_key_generation<RampPaillier, KeySize3072>,
         self::bench_key_generation<RampPaillier, KeySize4096>
     );
-
 }
 
-#[cfg(feature="keygen")]
+#[cfg(feature = "keygen")]
 benchmark_main!(bench::ramp);
 
-#[cfg(not(feature="keygen"))]
+#[cfg(not(feature = "keygen"))]
 fn main() {}

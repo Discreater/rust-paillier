@@ -1,15 +1,13 @@
-
 extern crate paillier;
 use paillier::*;
 
-#[cfg(not(feature="keygen"))]
+#[cfg(not(feature = "keygen"))]
 fn main() {
     println!("*** please run with 'keygen' feature ***")
 }
 
-#[cfg(feature="keygen")]
+#[cfg(feature = "keygen")]
 fn main() {
-
     // generate a fresh keypair and extract encryption and decryption keys
     let (ek, dk) = Paillier::keypair().keys();
 
@@ -27,9 +25,10 @@ fn main() {
     let c4 = Paillier::encrypt(&eek, &40);
 
     // add all of them together
-    let c = Paillier::add(&eek,
+    let c = Paillier::add(
+        &eek,
         &Paillier::add(&eek, &c1, &c2),
-        &Paillier::add(&eek, &c3, &c4)
+        &Paillier::add(&eek, &c3, &c4),
     );
 
     // multiply the sum by 2
@@ -38,5 +37,4 @@ fn main() {
     // decrypt final result
     let m: u64 = Paillier::decrypt(&ddk, &d);
     println!("decrypted total sum is {}", m);
-
 }
