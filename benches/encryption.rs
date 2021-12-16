@@ -8,7 +8,7 @@ use paillier::encoding::*;
 use paillier::*;
 
 mod helpers;
-use helpers::*;
+use crate::helpers::*;
 
 pub fn bench_encryption_ek<KS: KeySize>(b: &mut Bencher) {
     let ref keypair = KS::keypair();

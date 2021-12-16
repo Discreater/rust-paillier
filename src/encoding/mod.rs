@@ -2,10 +2,10 @@
 
 use std::marker::PhantomData;
 
-use arithimpl::traits::ConvertFrom;
+use crate::arithimpl::traits::ConvertFrom;
 use serde::de::Deserialize;
 use serde::ser::Serialize;
-use BigInt;
+use crate::BigInt;
 
 pub mod integral;
 

@@ -1,11 +1,11 @@
 use ring::digest::{Context, SHA256};
 use std::borrow::Borrow;
 
-use arithimpl::traits::*;
-use core::*;
-use proof::correct_key::CorrectKeyProofError;
-use proof::range_proof::{ChallengeBits, EncryptedPairs, Proof};
-use {BigInt, EncryptionKey, Paillier, RawCiphertext};
+use crate::arithimpl::traits::*;
+use crate::core::*;
+use crate::proof::correct_key::CorrectKeyProofError;
+use crate::proof::range_proof::{ChallengeBits, EncryptedPairs, Proof};
+use crate::{BigInt, EncryptionKey, Paillier, RawCiphertext};
 
 const RANGE_BITS: usize = 256; //for elliptic curves with 256bits for example
 
@@ -45,7 +45,7 @@ impl RangeProofNI for Paillier {
         secret_x: &BigInt,
         secret_r: &BigInt,
     ) -> (EncryptedPairs, ChallengeBits, Proof) {
-        use proof::RangeProof;
+        use crate::proof::RangeProof;
         let (encrypted_pairs, data_randomness_pairs) =
             Paillier::generate_encrypted_pairs(ek, range);
         let (c1, c2) = (encrypted_pairs.c1, encrypted_pairs.c2); // TODO[Morten] fix temporary hack
@@ -72,7 +72,7 @@ impl RangeProofNI for Paillier {
         range: &BigInt,
         cipher_x: RawCiphertext,
     ) -> Result<(), CorrectKeyProofError> {
-        use proof::RangeProof;
+        use crate::proof::RangeProof;
         <Paillier as RangeProof>::verifier_output(ek, e, encrypted_pairs, proof, range, cipher_x)
     }
 }
@@ -95,8 +95,8 @@ mod tests {
 
     use super::*;
     use test::Bencher;
-    use traits::*;
-    use {Keypair, RawPlaintext};
+    use crate::traits::*;
+    use crate::{Keypair, RawPlaintext};
 
     fn test_keypair() -> Keypair {
         let p = str::parse("148677972634832330983979593310074301486537017973460461278300587514468301043894574906886127642530475786889672304776052879927627556769456140664043088700743909632312483413393134504352834240399191134336344285483935856491230340093391784574980688823380828143810804684752914935441384845195613674104960646037368551517").unwrap();

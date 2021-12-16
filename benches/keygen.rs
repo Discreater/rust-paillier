@@ -8,7 +8,7 @@ mod helpers;
 mod bench {
 
     use bencher::Bencher;
-    use helpers::*;
+    use crate::helpers::*;
     use paillier::*;
 
     pub fn bench_key_generation<KS: KeySize>(b: &mut Bencher) {

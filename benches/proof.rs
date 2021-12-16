@@ -11,7 +11,7 @@ mod bench {
     use paillier::proof::CorrectKey;
     use paillier::*;
 
-    use helpers::*;
+    use crate::helpers::*;
 
     pub fn bench_zk_proof_challenge<KS: KeySize>(b: &mut Bencher) {
         let (ek, _dk) = KS::keypair().keys();

@@ -5,9 +5,9 @@ use std::borrow::{Borrow, Cow};
 use rayon::join;
 use serde::*;
 
-use arithimpl::traits::*;
-use traits::*;
-use {
+use crate::arithimpl::traits::*;
+use crate::traits::*;
+use crate::{
     BigInt, DecryptionKey, EncryptionKey, Keypair, MinimalDecryptionKey, MinimalEncryptionKey,
     Paillier, RawCiphertext, RawPlaintext,
 };

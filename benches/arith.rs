@@ -7,7 +7,7 @@ use paillier::arithimpl::traits::*;
 use paillier::*;
 
 mod helpers;
-use helpers::*;
+use crate::helpers::*;
 
 pub fn bench_mul(b: &mut Bencher) {
     let ref p: BigInt = str::parse(P2048).unwrap();

@@ -1,8 +1,8 @@
 //! Key generation following standard recommendations.
 
-use arithimpl::traits::*;
-use traits::*;
-use {BigInt, Keypair, Paillier};
+use crate::arithimpl::traits::*;
+use crate::traits::*;
+use crate::{BigInt, Keypair, Paillier};
 
 impl KeyGeneration<Keypair> for Paillier {
     fn keypair_with_modulus_size(bit_length: usize) -> Keypair {

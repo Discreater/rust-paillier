@@ -24,15 +24,15 @@ pub mod keygen;
 #[cfg(feature = "proofs")]
 pub mod proof;
 
-pub use core::*;
-pub use encoding::*;
-pub use traits::*;
+pub use crate::core::*;
+pub use crate::encoding::*;
+pub use crate::traits::*;
 
 #[cfg(feature = "keygen")]
-pub use keygen::*;
+pub use crate::keygen::*;
 
 #[cfg(feature = "proofs")]
-pub use proof::*;
+pub use crate::proof::*;
 
 use std::borrow::Cow;
 
@@ -46,7 +46,7 @@ pub use arithimpl::rampimpl::BigInt;
 pub use arithimpl::frampimpl::BigInt;
 
 #[cfg(feature = "usegmp")]
-pub use arithimpl::gmpimpl::BigInt;
+pub use crate::arithimpl::gmpimpl::BigInt;
 
 /// Keypair from which encryption and decryption keys can be derived.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]

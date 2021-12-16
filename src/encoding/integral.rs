@@ -4,9 +4,9 @@ use std::borrow::Borrow;
 use std::marker::PhantomData;
 
 use super::{pack, unpack, EncodedCiphertext};
-use arithimpl::traits::ConvertFrom;
-use traits::*;
-use {BigInt, Paillier, RawCiphertext, RawPlaintext};
+use crate::arithimpl::traits::ConvertFrom;
+use crate::traits::*;
+use crate::{BigInt, Paillier, RawCiphertext, RawPlaintext};
 
 impl<EK> Encrypt<EK, u64, EncodedCiphertext<u64>> for Paillier
 where
@@ -319,7 +319,7 @@ where
 mod tests {
 
     use super::*;
-    use Keypair;
+    use crate::Keypair;
 
     fn test_keypair() -> Keypair {
         let p = str::parse("148677972634832330983979593310074301486537017973460461278300587514468301043894574906886127642530475786889672304776052879927627556769456140664043088700743909632312483413393134504352834240399191134336344285483935856491230340093391784574980688823380828143810804684752914935441384845195613674104960646037368551517").unwrap();

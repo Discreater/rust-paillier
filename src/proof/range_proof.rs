@@ -6,11 +6,11 @@ use rand::prelude::*;
 use rayon::prelude::*;
 use ring::digest::{Context, SHA256};
 
-use arithimpl::traits::*;
-use core::*;
-use proof::correct_key::CorrectKeyProofError;
-use traits::*;
-use {BigInt, EncryptionKey, Paillier, RawCiphertext, RawPlaintext};
+use crate::arithimpl::traits::*;
+use crate::core::*;
+use crate::proof::correct_key::CorrectKeyProofError;
+use crate::traits::*;
+use crate::{BigInt, EncryptionKey, Paillier, RawCiphertext, RawPlaintext};
 
 const STATISTICAL_ERROR_FACTOR: usize = 40;
 const RANGE_BITS: usize = 256; //for elliptic curves with 256bits for example
@@ -399,8 +399,8 @@ mod tests {
     use test::Bencher;
 
     use super::*;
-    use proof::correct_key::CorrectKey;
-    use Keypair;
+    use crate::proof::correct_key::CorrectKey;
+    use crate::Keypair;
 
     fn test_keypair() -> Keypair {
         let p = str::parse("148677972634832330983979593310074301486537017973460461278300587514468301043894574906886127642530475786889672304776052879927627556769456140664043088700743909632312483413393134504352834240399191134336344285483935856491230340093391784574980688823380828143810804684752914935441384845195613674104960646037368551517").unwrap();
@@ -543,7 +543,7 @@ mod tests {
             let (ek, _dk) = test_keypair().keys();
             let (verifier_ek, _verifier_dk) = test_keypair().keys();
             // verifier:
-            let (_com, r, e) = Paillier::verifier_commit(&verifier_ek);
+            let (_com, _r, e) = Paillier::verifier_commit(&verifier_ek);
             // prover:
             let (encrypted_pairs, data_and_randmoness_pairs) =
                 Paillier::generate_encrypted_pairs(&ek, &range);

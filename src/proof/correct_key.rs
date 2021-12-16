@@ -6,9 +6,9 @@ use std::iter;
 use rayon::prelude::*;
 use ring::digest::{Context, SHA256};
 
-use arithimpl::traits::*;
-use core::extract_nroot;
-use {BigInt, DecryptionKey, EncryptionKey, Paillier};
+use crate::arithimpl::traits::*;
+use crate::core::extract_nroot;
+use crate::{BigInt, DecryptionKey, EncryptionKey, Paillier};
 
 const STATISTICAL_ERROR_FACTOR: usize = 40;
 
@@ -198,8 +198,8 @@ where
 mod tests {
 
     use super::*;
-    use traits::*;
-    use Keypair;
+    use crate::traits::*;
+    use crate::Keypair;
 
     fn test_keypair() -> Keypair {
         let p = str::parse("148677972634832330983979593310074301486537017973460461278300587514468301043894574906886127642530475786889672304776052879927627556769456140664043088700743909632312483413393134504352834240399191134336344285483935856491230340093391784574980688823380828143810804684752914935441384845195613674104960646037368551517").unwrap();
