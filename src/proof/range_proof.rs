@@ -17,10 +17,10 @@ const RANGE_BITS: usize = 256; //for elliptic curves with 256bits for example
 
 #[derive(Default, Debug, Serialize, Deserialize)]
 pub struct EncryptedPairs {
-    #[serde(with = "::serialize::vecbigint")]
+    #[serde(with = "crate::serialize::vecbigint")]
     pub c1: Vec<BigInt>, // TODO[Morten] should not need to be public
 
-    #[serde(with = "::serialize::vecbigint")]
+    #[serde(with = "crate::serialize::vecbigint")]
     pub c2: Vec<BigInt>, // TODO[Morten] should not need to be public
 }
 
@@ -39,26 +39,26 @@ pub struct ChallengeBits(Vec<u8>);
 #[derive(Debug, Serialize, Deserialize)]
 pub enum Response {
     Open {
-        #[serde(with = "::serialize::bigint")]
+        #[serde(with = "crate::serialize::bigint")]
         w1: BigInt,
 
-        #[serde(with = "::serialize::bigint")]
+        #[serde(with = "crate::serialize::bigint")]
         r1: BigInt,
 
-        #[serde(with = "::serialize::bigint")]
+        #[serde(with = "crate::serialize::bigint")]
         w2: BigInt,
 
-        #[serde(with = "::serialize::bigint")]
+        #[serde(with = "crate::serialize::bigint")]
         r2: BigInt,
     },
 
     Mask {
         j: u8,
 
-        #[serde(with = "::serialize::bigint")]
+        #[serde(with = "crate::serialize::bigint")]
         masked_x: BigInt,
 
-        #[serde(with = "::serialize::bigint")]
+        #[serde(with = "crate::serialize::bigint")]
         masked_r: BigInt,
     },
 }

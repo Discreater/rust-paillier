@@ -51,10 +51,10 @@ pub use crate::arithimpl::gmpimpl::BigInt;
 /// Keypair from which encryption and decryption keys can be derived.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Keypair {
-    #[serde(with = "::serialize::bigint")]
+    #[serde(with = "crate::serialize::bigint")]
     pub p: BigInt, // TODO[Morten] okay to make non-public?
 
-    #[serde(with = "::serialize::bigint")]
+    #[serde(with = "crate::serialize::bigint")]
     pub q: BigInt, // TODO[Morten] okay to make non-public?
 }
 
@@ -63,7 +63,7 @@ pub struct Keypair {
 /// Used e.g. for serialization of `EncryptionKey`.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MinimalEncryptionKey {
-    #[serde(with = "::serialize::bigint")]
+    #[serde(with = "crate::serialize::bigint")]
     pub n: BigInt,
 }
 
@@ -72,10 +72,10 @@ pub struct MinimalEncryptionKey {
 /// Used e.g. for serialization of `DecryptionKey`.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct MinimalDecryptionKey {
-    #[serde(with = "::serialize::bigint")]
+    #[serde(with = "crate::serialize::bigint")]
     pub p: BigInt,
 
-    #[serde(with = "::serialize::bigint")]
+    #[serde(with = "crate::serialize::bigint")]
     pub q: BigInt,
 }
 

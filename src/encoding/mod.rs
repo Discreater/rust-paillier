@@ -12,7 +12,7 @@ pub mod integral;
 /// Encrypted message with type information.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct EncodedCiphertext<T> {
-    #[serde(with = "::serialize::bigint")]
+    #[serde(with = "crate::serialize::bigint")]
     raw: BigInt,
 
     components: usize,
