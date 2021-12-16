@@ -129,7 +129,7 @@ mod tests {
             Paillier::prover(&ek, &range, &secret_x, &secret_r);
         let result =
             Paillier::verifier(&ek, &challenge, &encrypted_pairs, &proof, &range, cipher_x);
-        assert!(result.is_ok(), true);
+        assert!(result.is_ok());
     }
 
     #[test]
