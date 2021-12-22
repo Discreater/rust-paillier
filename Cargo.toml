@@ -50,6 +50,7 @@ bit-vec = "0.5"
 bencher = "0.1"
 # bencher = { git="https://github.com/snipsco-forks/bencher" }
 serde_json = "1.0"
+criterion = "0.3"
 
 [[bench]]
 name = "arith"
