@@ -14,14 +14,14 @@ macro_rules! scheme {
         #[cfg(feature="inclgmp")]
         pub mod gmp {
             #[allow(dead_code)]
-            type $s = ::GmpPaillier;
+            type $s = crate::GmpPaillier;
             $body
         }
 
         #[cfg(feature="inclnum")]
         pub mod num {
             #[allow(dead_code)]
-            type $s = ::NumPaillier;
+            type $s = crate::NumPaillier;
             $body
         }
 

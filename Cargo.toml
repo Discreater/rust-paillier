@@ -25,7 +25,7 @@ edition = "2021"
 travis-ci = { repository = "snipsco/rust-paillier" }
 
 [features]
-default = ["inclramp", "defaultramp", "keygen"]
+default = ["inclramp", "inclnum", "inclgmp", "defaultramp", "keygen"]
 keygen = []
 inclramp = ["ramp"]
 inclnum = ["num"]
@@ -44,6 +44,7 @@ rug = { version="1.14", optional=true }
 
 [dev-dependencies]
 bencher = "0.1"
+criterion = "0.3"
 
 [[bench]]
 name = "encryption"
@@ -63,4 +64,8 @@ harness = false
 
 [[bench]]
 name = "algo"
+harness = false
+
+[[bench]]
+name = "cri-enc"
 harness = false
