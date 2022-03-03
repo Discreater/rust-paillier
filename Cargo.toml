@@ -25,11 +25,12 @@ edition = "2021"
 travis-ci = { repository = "snipsco/rust-paillier" }
 
 [features]
-default = ["inclramp", "inclnum", "inclgmp", "defaultramp", "keygen"]
+default = ["inclramp", "inclnum", "inclgmp", "inclrug", "defaultgmp", "keygen"]
 keygen = []
 inclramp = ["ramp"]
 inclnum = ["num"]
 inclgmp = ["rust-gmp"]
+inclrug = ["rug"]
 defaultramp = []
 defaultnum = []
 defaultgmp = []
@@ -68,4 +69,8 @@ harness = false
 
 [[bench]]
 name = "cri-enc"
+harness = false
+
+[[bench]]
+name = "matrix"
 harness = false
