@@ -255,157 +255,186 @@ impl<const D: usize> MatrixNoDot<vector::Ciphertext<BigInteger, u64>, D> {
     }
 }
 
-const matrix_size: [usize; 2] = [100, 100];
+const MATRIX_SIZE: [usize; 2] = [100, 100];
 
 fn bench_keygen(c: &mut Criterion) {
-    c.bench_function("keygen", |b| {
-        b.iter(|| {
-            let (ek, dk) = Paillier::keypair().keys();
-            let code: Code<BigInteger> = integral::Code::default();
+    let mut group = c.benchmark_group("keygen");
 
-            let _eek = ek.with_code(&code);
-            let _ddk = dk.with_code(&code);
-        })
-    });
+    for key_size in [1024, 2048] {
+        group.bench_function(format!("{}", key_size), |b| {
+            b.iter(|| {
+                let (ek, dk) = Paillier::keypair_with_modulus_size(key_size).keys();
+                let code: Code<BigInteger> = integral::Code::default();
+
+                let _eek = ek.with_code(&code);
+                let _ddk = dk.with_code(&code);
+            })
+        });
+    }
 }
 
 fn bench_encryption(c: &mut Criterion) {
-    c.bench_function("encryption", |b| {
-        let (ek, dk) = Paillier::keypair().keys();
-        let code: Code<BigInteger> = integral::Code::default();
+    let mut group = c.benchmark_group("encryption");
 
-        let eek = ek.with_code(&code);
-        let _ddk = dk.with_code(&code);
-        let p = Matrix::rand(&matrix_size);
-        b.iter(|| {
-            let _ = p.encrypt(black_box(&eek));
+    for key_size in [1024, 2048] {
+        group.bench_function(format!("{}", key_size), |b| {
+            let (ek, dk) = Paillier::keypair_with_modulus_size(key_size).keys();
+            let code: Code<BigInteger> = integral::Code::default();
+
+            let eek = ek.with_code(&code);
+            let _ddk = dk.with_code(&code);
+            let p = Matrix::rand(&MATRIX_SIZE);
+            b.iter(|| {
+                let _ = p.encrypt(black_box(&eek));
+            });
         });
-    });
+    }
 }
 
 fn bench_decryption(c: &mut Criterion) {
-    c.bench_function("decryption", |b| {
-        let (ek, dk) = Paillier::keypair().keys();
-        let code: Code<BigInteger> = integral::Code::default();
+    let mut group = c.benchmark_group("decryption");
+    for key_size in [1024, 2048] {
+        group.bench_function(format!("{}", key_size), |b| {
+            let (ek, dk) = Paillier::keypair_with_modulus_size(key_size).keys();
+            let code: Code<BigInteger> = integral::Code::default();
 
-        let eek = ek.with_code(&code);
-        let ddk = dk.with_code(&code);
-        let p = Matrix::rand(&matrix_size);
-        let c = p.encrypt(black_box(&eek));
-        b.iter(|| {
-            c.decrypt(black_box(&ddk));
+            let eek = ek.with_code(&code);
+            let ddk = dk.with_code(&code);
+            let p = Matrix::rand(&MATRIX_SIZE);
+            let c = p.encrypt(black_box(&eek));
+            b.iter(|| {
+                c.decrypt(black_box(&ddk));
+            });
         });
-    });
+    }
 }
 
 fn bench_addition(c: &mut Criterion) {
-    c.bench_function("addition", |b| {
-        let (ek, dk) = Paillier::keypair().keys();
-        let code: Code<BigInteger> = integral::Code::default();
+    let mut group = c.benchmark_group("addition");
+    for key_size in [1024, 2048] {
+        group.bench_function(format!("{}", key_size), |b| {
+            let (ek, dk) = Paillier::keypair_with_modulus_size(key_size).keys();
+            let code: Code<BigInteger> = integral::Code::default();
 
-        let eek = ek.with_code(&code);
-        let _ddk = dk.with_code(&code);
-        let p1 = Matrix::rand(&matrix_size);
-        let p2 = Matrix::rand(&matrix_size);
-        let c1 = p1.encrypt(&eek);
-        let c2 = p2.encrypt(&eek);
-        b.iter(|| {
-            c1.add_encrypted(black_box(&c2), black_box(&eek));
+            let eek = ek.with_code(&code);
+            let _ddk = dk.with_code(&code);
+            let p1 = Matrix::rand(&MATRIX_SIZE);
+            let p2 = Matrix::rand(&MATRIX_SIZE);
+            let c1 = p1.encrypt(&eek);
+            let c2 = p2.encrypt(&eek);
+            b.iter(|| {
+                c1.add_encrypted(black_box(&c2), black_box(&eek));
+            });
         });
-    });
+    }
 }
 
 fn bench_multiplication(c: &mut Criterion) {
-    c.bench_function("multiplication", |b| {
-        let (ek, dk) = Paillier::keypair().keys();
-        let code: Code<BigInteger> = integral::Code::default();
+    let mut group = c.benchmark_group("multiplication");
+    for key_size in [1024, 2048] {
+        group.bench_function(format!("{}", key_size), |b| {
+            let (ek, dk) = Paillier::keypair_with_modulus_size(key_size).keys();
+            let code: Code<BigInteger> = integral::Code::default();
 
-        let eek = ek.with_code(&code);
-        let _ddk = dk.with_code(&code);
-        let p1 = Matrix::rand(&matrix_size);
-        let p2 = Matrix::rand(&matrix_size);
-        let c1 = p1.encrypt(&eek);
-        b.iter(|| {
-            c1.mul_encrypted(black_box(&p2), black_box(&eek));
+            let eek = ek.with_code(&code);
+            let _ddk = dk.with_code(&code);
+            let p1 = Matrix::rand(&MATRIX_SIZE);
+            let p2 = Matrix::rand(&MATRIX_SIZE);
+            let c1 = p1.encrypt(&eek);
+            b.iter(|| {
+                c1.mul_encrypted(black_box(&p2), black_box(&eek));
+            });
         });
-    });
+    }
 }
 
 fn bench_dot(c: &mut Criterion) {
-    c.bench_function("dot", |b| {
-        let (ek, dk) = Paillier::keypair().keys();
-        let code: Code<BigInteger> = integral::Code::default();
+    let mut group = c.benchmark_group("dot");
+    for key_size in [1024, 2048] {
+        group.bench_function(format!("{}", key_size), |b| {
+            let (ek, dk) = Paillier::keypair_with_modulus_size(key_size).keys();
+            let code: Code<BigInteger> = integral::Code::default();
 
-        let eek = ek.with_code(&code);
-        let _ddk = dk.with_code(&code);
-        let p1 = Matrix::rand(&matrix_size);
-        let p2 = Matrix::rand(&matrix_size);
-        let c1 = p1.encrypt(&eek);
-        b.iter(|| {
-            c1.dot_encrypted(black_box(&p2), black_box(&eek));
+            let eek = ek.with_code(&code);
+            let _ddk = dk.with_code(&code);
+            let p1 = Matrix::rand(&MATRIX_SIZE);
+            let p2 = Matrix::rand(&MATRIX_SIZE);
+            let c1 = p1.encrypt(&eek);
+            b.iter(|| {
+                c1.dot_encrypted(black_box(&p2), black_box(&eek));
+            });
         });
-    });
+    }
 }
 
 fn bench_addition_full(c: &mut Criterion) {
-    c.bench_function("addition full", |b| {
-        b.iter(|| {
-            let (ek, dk) = Paillier::keypair().keys();
-            let code: Code<BigInteger> = integral::Code::default();
+    let mut group = c.benchmark_group("addition full");
+    for key_size in [1024, 2048] {
+        group.bench_function(format!("{}", key_size), |b| {
+            b.iter(|| {
+                let (ek, dk) = Paillier::keypair_with_modulus_size(key_size).keys();
+                let code: Code<BigInteger> = integral::Code::default();
 
-            let eek = ek.with_code(&code);
-            let ddk = dk.with_code(&code);
+                let eek = ek.with_code(&code);
+                let ddk = dk.with_code(&code);
 
-            let p1 = Matrix::rand(&matrix_size);
-            let p2 = Matrix::rand(&matrix_size);
-            let c1 = p1.encrypt(&eek);
-            let c2 = p2.encrypt(&eek);
-            let r = c1.add_encrypted(&c2, &eek);
-            r.decrypt(&ddk)
+                let p1 = Matrix::rand(&MATRIX_SIZE);
+                let p2 = Matrix::rand(&MATRIX_SIZE);
+                let c1 = p1.encrypt(&eek);
+                let c2 = p2.encrypt(&eek);
+                let r = c1.add_encrypted(&c2, &eek);
+                r.decrypt(&ddk)
+            });
         });
-    });
+    }
 }
 
 fn bench_multiplication_full(c: &mut Criterion) {
-    c.bench_function("multiplication full", |b| {
-        b.iter(|| {
-            let (ek, dk) = Paillier::keypair().keys();
-            let code: Code<BigInteger> = integral::Code::default();
+    let mut group = c.benchmark_group("multiplication full");
+    for key_size in [1024, 2048] {
+        group.bench_function(format!("{}", key_size), |b| {
+            b.iter(|| {
+                let (ek, dk) = Paillier::keypair_with_modulus_size(key_size).keys();
+                let code: Code<BigInteger> = integral::Code::default();
 
-            let eek = ek.with_code(&code);
-            let ddk = dk.with_code(&code);
+                let eek = ek.with_code(&code);
+                let ddk = dk.with_code(&code);
 
-            let p1 = Matrix::rand(&matrix_size);
-            let p2 = Matrix::rand(&matrix_size);
-            let c1 = p1.encrypt(&eek);
-            let r = c1.mul_encrypted(&p2, &eek);
-            r.decrypt(&ddk)
+                let p1 = Matrix::rand(&MATRIX_SIZE);
+                let p2 = Matrix::rand(&MATRIX_SIZE);
+                let c1 = p1.encrypt(&eek);
+                let r = c1.mul_encrypted(&p2, &eek);
+                r.decrypt(&ddk)
+            });
         });
-    });
+    }
 }
 
 fn bench_dot_full(c: &mut Criterion) {
-    c.bench_function("dot full", |b| {
-        b.iter(|| {
-            let (ek, dk) = Paillier::keypair().keys();
-            let code: Code<BigInteger> = integral::Code::default();
+    let mut group = c.benchmark_group("dot full");
+    for key_size in [1024, 2048] {
+        group.bench_function(format!("{}", key_size), |b| {
+            b.iter(|| {
+                let (ek, dk) = Paillier::keypair_with_modulus_size(key_size).keys();
+                let code: Code<BigInteger> = integral::Code::default();
 
-            let eek = ek.with_code(&code);
-            let ddk = dk.with_code(&code);
+                let eek = ek.with_code(&code);
+                let ddk = dk.with_code(&code);
 
-            let p1 = Matrix::rand(&matrix_size);
-            let p2 = Matrix::rand(&matrix_size);
-            let c1 = p1.encrypt(&eek);
-            let r = c1.dot_encrypted(&p2, &eek);
-            r.decrypt(&ddk)
+                let p1 = Matrix::rand(&MATRIX_SIZE);
+                let p2 = Matrix::rand(&MATRIX_SIZE);
+                let c1 = p1.encrypt(&eek);
+                let r = c1.dot_encrypted(&p2, &eek);
+                r.decrypt(&ddk)
+            });
         });
-    });
+    }
 }
 
-criterion_group!{
+criterion_group! {
     name = benches;
     config = Criterion::default().sample_size(10);
-    targets = 
+    targets =
     bench_keygen,
     bench_encryption,
     bench_decryption,

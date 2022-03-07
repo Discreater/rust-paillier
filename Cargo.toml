@@ -41,7 +41,7 @@ num-traits = "0.2"
 ramp = { git="https://github.com/Discreater/ramp.git", optional=true }
 num = { version="0.4", optional=true, features=["rand"] }
 rust-gmp = { version="0.5", optional=true }
-rug = { version="1.14", optional=true }
+rug = { version="1.15", optional=true }
 
 [dev-dependencies]
 bencher = "0.1"
