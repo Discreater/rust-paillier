@@ -558,7 +558,7 @@ dependencies = [
 [[package]]
 name = "ramp"
 version = "0.6.0"
-source = "git+https://github.com/Discreater/ramp.git#726546c40db1723ff5285f9faa371f7b7322e091"
+source = "git+https://github.com/paillier-b214/ramp.git#726546c40db1723ff5285f9faa371f7b7322e091"
 dependencies = [
  "cc",
  "hamming",

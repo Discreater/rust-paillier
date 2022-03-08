@@ -1,5 +1,32 @@
 # Paillier
 
+## Change log of `paillier-b214`
+
+- Use [GMP](https://github.com/fizyk20/rust-gmp) as default arbitrary precision library.
+- Update the [RAMP](https://github.com/paillier-b214/ramp) library.
+- Add matrix benches (see `benches/matrix.rs`).
+- Update to Rust 2021.
+
+### bench matrix
+
+Rust nightly is required to run the matrix benchmarks.
+
+```shell
+cargo bench --bench matrix
+```
+
+It may cost a lot of time. It will measure the time of matrix encryption, decryption, addition, dot, and multiplication
+for key size of `1024`, `2048`.
+
+You can check the result in standard output or the html files in `target/criterion/**/report/index.html`.
+
+---
+
+> RAW README
+
+# Paillier
+
+
 [![Build Status](https://travis-ci.org/snipsco/rust-paillier.svg)](https://travis-ci.org/snipsco/rust-paillier)
 [![Latest version](https://img.shields.io/crates/v/paillier.svg)](https://img.shields.io/crates/v/paillier.svg)
 [![License: MIT/Apache2](https://img.shields.io/badge/license-MIT%2fApache2-blue.svg)](https://img.shields.io/badge/license-MIT%2fApache2-blue.svg)
